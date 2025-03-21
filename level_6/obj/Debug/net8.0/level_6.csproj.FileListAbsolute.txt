@@ -1,0 +1,14 @@
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/bin/Debug/net8.0/level_6
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/bin/Debug/net8.0/level_6.deps.json
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/bin/Debug/net8.0/level_6.runtimeconfig.json
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/bin/Debug/net8.0/level_6.dll
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/bin/Debug/net8.0/level_6.pdb
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/obj/Debug/net8.0/level_6.GeneratedMSBuildEditorConfig.editorconfig
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/obj/Debug/net8.0/level_6.AssemblyInfoInputs.cache
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/obj/Debug/net8.0/level_6.AssemblyInfo.cs
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/obj/Debug/net8.0/level_6.csproj.CoreCompileInputs.cache
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/obj/Debug/net8.0/level_6.dll
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/obj/Debug/net8.0/refint/level_6.dll
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/obj/Debug/net8.0/level_6.pdb
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/obj/Debug/net8.0/level_6.genruntimeconfig.cache
+/home/archebus/Documents/Study/C#_Players_Guide/level_6/obj/Debug/net8.0/ref/level_6.dll

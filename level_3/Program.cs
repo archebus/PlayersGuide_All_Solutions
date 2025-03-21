@@ -1,4 +1,7 @@
-﻿void speakLots() {
+﻿// Write a program that uses Console.WriteLine at least 5 times.
+// Write a program that takes in user input, and then outputs to the console.
+
+void speakLots() {
 
 	int i = 0;
 	
