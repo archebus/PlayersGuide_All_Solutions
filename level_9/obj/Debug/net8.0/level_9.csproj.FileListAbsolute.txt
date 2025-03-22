@@ -1,0 +1,14 @@
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/bin/Debug/net8.0/level_9
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/bin/Debug/net8.0/level_9.deps.json
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/bin/Debug/net8.0/level_9.runtimeconfig.json
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/bin/Debug/net8.0/level_9.dll
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/bin/Debug/net8.0/level_9.pdb
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/obj/Debug/net8.0/level_9.GeneratedMSBuildEditorConfig.editorconfig
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/obj/Debug/net8.0/level_9.AssemblyInfoInputs.cache
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/obj/Debug/net8.0/level_9.AssemblyInfo.cs
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/obj/Debug/net8.0/level_9.csproj.CoreCompileInputs.cache
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/obj/Debug/net8.0/level_9.dll
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/obj/Debug/net8.0/refint/level_9.dll
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/obj/Debug/net8.0/level_9.pdb
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/obj/Debug/net8.0/level_9.genruntimeconfig.cache
+/home/archebus/Documents/Study/C#_Players_Guide/level_9/obj/Debug/net8.0/ref/level_9.dll
