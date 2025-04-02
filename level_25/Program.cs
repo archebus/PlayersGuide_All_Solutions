@@ -4,6 +4,7 @@
 // - Create a pack that can store an array of items, it should have a max volume and weight allowed.
 // - Make a public bool add (item) to pack class, it should fail it item would exceed volume or weight.
 // - Create a menu that allows the user to add or remove the items above from the pack.
+using System.Text;
 
 class InvItem
 {
@@ -18,6 +19,11 @@ class Arrow : InvItem
 		Weight = 0.1;
 		Volume = 0.05;
 	}
+
+	public override string ToString()
+	{
+		return "Arrow";
+	}
 }
 
 class Bow : InvItem
@@ -26,6 +32,11 @@ class Bow : InvItem
 	{
 		Weight = 1;
 		Volume = 4;
+	}
+
+	public override string ToString()
+	{
+		return "Bow";
 	}
 }
 
@@ -36,6 +47,11 @@ class Rope : InvItem
 		Weight = 1;
 		Volume = 1.5;
 	}
+
+	public override string ToString()
+	{
+		return "Rope";
+	}
 }
 
 class Water : InvItem
@@ -44,6 +60,11 @@ class Water : InvItem
 	{
 		Weight = 2;
 		Volume = 3;
+	}
+
+	public override string ToString()
+	{
+		return "Water";
 	}
 }
 
@@ -54,6 +75,11 @@ class Food : InvItem
 		Weight = 1;
 		Volume = 0.5;
 	}
+
+	public override string ToString()
+	{
+		return "Food";
+	}
 }
 
 class Sword : InvItem
@@ -63,11 +89,16 @@ class Sword : InvItem
 		Weight = 5;
 		Volume = 3;
 	}
+
+	public override string ToString()
+	{
+		return "Sword";
+	}
 }
 
 class Pack
 {
-	public InvItem[] Items { get; set; } = default!;
+	public List<string> Items = new List<string>();
 	public double CurrentWeight { get; set; }
 	public double CurrentVolume { get; set; }
 
@@ -76,8 +107,6 @@ class Pack
 
 	public Pack()
 	{
-		Items = new InvItem[20];
-
 		CurrentWeight = 0;
 		CurrentVolume = 0;
 
@@ -94,19 +123,33 @@ class Pack
 			 CurrentVolume + item.Volume > _maxVolume)
 			{ return false; }
 		
-		// If so: add the item.
-		for(int i = 0; i < Items.Length; i++)
+		// If so: add the item.a
+		Items.Add(item.ToString()!);
+		CurrentWeight += item.Weight;
+		CurrentVolume += item.Volume;
+
+		return true;
+	}
+
+	public override string ToString()
+	{
+		
+		StringBuilder returnMe = new StringBuilder();
+
+		foreach (var item in Items)
 		{
-			if(Items[i] == null)
+			if (Items.Count == 1)
 			{
-				Items[i] = item;
-				CurrentWeight += item.Weight;
-				CurrentVolume += item.Volume;
-				return true;
+				returnMe.Append(item);
+			}
+			else
+			{
+				returnMe.Append(item + ", ");
 			}
 		}
-
-		return false;
+		
+		if (Items.Count != 1) returnMe.Append("\b\b  ");
+		return returnMe.ToString();
 	}
 }
 
@@ -122,6 +165,7 @@ class Program
 			Console.Clear();
 			Console.WriteLine($"Put an item in the bag?");
 			Console.WriteLine($"W: {pack.CurrentWeight} | V: {pack.CurrentVolume}");
+			Console.WriteLine($"Contents: {pack.ToString()}");
 			Console.WriteLine($"1. Arrow");
 			Console.WriteLine($"2. Bow");
 			Console.WriteLine($"3. Rope");
