@@ -1,0 +1,63 @@
+## User-specific files
+.idea/
+.vscode/
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer directories
+bin/
+obj/
+
+# .NET Core build folders
+bin/
+obj/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# User-specific files
+.vscode/
+.idea/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer directories
+bin/
+obj/
+
+# .NET Core build folders
+bin/
+obj/
+
+# .NET Core build files
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# NPM package folders
+node_modules/
+
+# .vs
+.vs/
+
+# JetBrains Rider
+.idea/
+
+# ASP.NET files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
