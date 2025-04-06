@@ -23,11 +23,6 @@ public static class Display
 public class Room 
 {
 	public string Description { get; set; } = string.Empty;
-
-	public virtual void Enable()
-	{
-		Console.WriteLine("There is nothing to enable here.");
-	}
 }
 
 public class Entrance : Room
@@ -46,7 +41,7 @@ public class Fountain : Room
 
 	public Fountain() { Description = "You hear water dripping in this room. The fountain is here!"; }
 
-	public override void Enable()
+	public void Enable()
 	{
 		if (!Enabled)
 		{
@@ -71,7 +66,6 @@ public class Player
 {
 	public Position Pos { get; set; } = default!;
 	public bool Alive { get; set; } = true;
-	public bool Victory { get; set; } = false;
 	public Room CurrentRoom { get; set; } = default!;
 
 	public Player(Dungeon main)
@@ -108,9 +102,6 @@ public class Player
 				break;
 			case "enable":
 				Enable();
-				break;
-			case "exit":
-				Exit(dung);
 				break;
 			default:
 				Console.WriteLine("Unknown command.");
@@ -153,34 +144,13 @@ public class Player
 
 	public void Enable()
 	{
-		if(CurrentRoom is Fountain)
+		if(CurrentRoom.GetType() == typeof(Fountain))
 		{
 			CurrentRoom.Enable();
 			return;
 		}
 
 		Console.WriteLine("There is nothing to enable");
-	}
-
-	public bool CheckAlive()
-	{
-		if(CurrentRoom is Pit)
-		{
-			Console.WriteLine("You plummet to your death in the pit");
-			Alive = false;
-			return Alive;
-		}
-
-		return Alive;
-	}
-
-	public void Exit(Dungeon dung)
-	{
-		if(CurrentRoom is Entrance && dung.RefFountain.Enabled)
-		{
-			Console.WriteLine("You've escaped the dungeon!");
-			Victory = true;
-		}
 	}
 
 }
@@ -191,13 +161,11 @@ public class Player
 public class Dungeon
 {
 	public Room[,] Rooms { get; set; }
-	public Fountain RefFountain { get; set; } = default!;
 
 	public Dungeon()
 	{
 		Rooms = new Room[4,4];		// Starting 4x4, expand this to be variable with diff.
 		InitRooms();
-		RefFountain = (Fountain)Rooms[0,2];
 	}
 
 	public Room GetRoom(Position pos) => Rooms[pos.X,pos.Y];
@@ -246,22 +214,11 @@ class Program
 
 		string input;
 		
-		while(p1.Alive && !p1.Victory)
+		while(p1.Alive)
 		{
 			Display.GameScreen(main.GetRoom(p1.Pos), p1);
 			input = p1.GetInput();
-			Command? command = p1.ParseInput(input);
-
-			if (command != null)
-			{
-				p1.Action(command, main);
-				p1.CheckAlive();
-			}
+			Action(ParseInput(input), main);
 		}
-
-		if (p1.Victory)
-		Console.WriteLine("Congratulations! You've won!");
-		else
-		Console.WriteLine("Game Over!");
 	}
 }

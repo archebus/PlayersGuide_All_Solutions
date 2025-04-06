@@ -71,7 +71,7 @@ public class Player
 {
 	public Position Pos { get; set; } = default!;
 	public bool Alive { get; set; } = true;
-	public bool Victory { get; set; } = false;
+	public bool PlayerVictory { get; set; } = false;
 	public Room CurrentRoom { get; set; } = default!;
 
 	public Player(Dungeon main)
@@ -176,11 +176,14 @@ public class Player
 
 	public void Exit(Dungeon dung)
 	{
-		if(CurrentRoom is Entrance && dung.RefFountain.Enabled)
+		if(CurrentRoom is Entrance && dung.Rooms[0,2].Enabled)
 		{
 			Console.WriteLine("You've escaped the dungeon!");
-			Victory = true;
+			PlayerVictory = true;
+			return;
 		}
+
+		return PlayerVictory;
 	}
 
 }
@@ -191,13 +194,11 @@ public class Player
 public class Dungeon
 {
 	public Room[,] Rooms { get; set; }
-	public Fountain RefFountain { get; set; } = default!;
 
 	public Dungeon()
 	{
 		Rooms = new Room[4,4];		// Starting 4x4, expand this to be variable with diff.
 		InitRooms();
-		RefFountain = (Fountain)Rooms[0,2];
 	}
 
 	public Room GetRoom(Position pos) => Rooms[pos.X,pos.Y];
@@ -241,27 +242,20 @@ class Program
 {
 	static void Main(string[] args)
 	{
+		bool gameRun = true;
+
 		Dungeon main = new Dungeon();
 		Player p1 = new Player(main);
 
 		string input;
 		
-		while(p1.Alive && !p1.Victory)
+		while(gameRun)
 		{
 			Display.GameScreen(main.GetRoom(p1.Pos), p1);
 			input = p1.GetInput();
-			Command? command = p1.ParseInput(input);
-
-			if (command != null)
-			{
-				p1.Action(command, main);
-				p1.CheckAlive();
-			}
+			p1.Action(p1.ParseInput(input)!, main);
+			gameRun = p1.CheckAlive();
+		        gameRun = p1.
 		}
-
-		if (p1.Victory)
-		Console.WriteLine("Congratulations! You've won!");
-		else
-		Console.WriteLine("Game Over!");
 	}
 }
