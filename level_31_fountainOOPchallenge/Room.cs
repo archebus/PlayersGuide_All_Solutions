@@ -2,14 +2,27 @@ namespace Fountain.Models
 {
 	public interface ICanBeSensed
 	{
-		string SenseDescription { get; }  
+		string SenseDescription { get; }
+		ConsoleColor SenseColor { get; }
 	}
 
 	public class Room 
 	{
 		public virtual string Description { get; set; } = string.Empty;
 
-		public virtual void Enter(Player player) { }
+		public virtual void Enter(Player player, Dungeon level) 
+		{
+			foreach(Entity e in level.Enemies)
+			{
+				if(player.Pos == e.Pos && e is ICanAttack validEnemy)
+					validEnemy.Attack(player, level);
+			}
+		}
+
+        	public virtual void Exit(Player player, Dungeon level)
+        	{
+            		Console.WriteLine("You cannot find any exit here."); 
+        	}
 
 		public virtual void Enable()
 		{
@@ -26,6 +39,19 @@ namespace Fountain.Models
 			Pos = pos;
 			Description = "You see light coming from the cavern entrance.";
 		}
+
+        	public override void Exit(Player player, Dungeon level)
+        	{
+            		if(level.RefFountain.Enabled)
+			{
+				Console.WriteLine("You've escaped the dungeon!");
+				player.Victory = true;
+			}
+            		else
+            		{
+                		Console.WriteLine("The exit is barred... you must find the fountain!");
+            		}
+        	}
 	}
 
 	public class Pit : Room, ICanBeSensed
@@ -36,8 +62,9 @@ namespace Fountain.Models
 		}
 
 		public string SenseDescription => "You hear a soft whistling wind ... there is a pit nearby";
+		public ConsoleColor SenseColor => ConsoleColor.Red;
 
-		public override void Enter(Player player)
+		public override void Enter(Player player, Dungeon level)
 		{
 			player.Alive = false;
 			Console.WriteLine("You fell in a pit and died.");
@@ -57,6 +84,8 @@ namespace Fountain.Models
 			Enabled
 			? "You hear water rushing nearby."
 			: "You hear water dripping softly ... The fountain is nearby!";
+
+		public ConsoleColor SenseColor => ConsoleColor.Blue;
 
 		public override void Enable()
 		{

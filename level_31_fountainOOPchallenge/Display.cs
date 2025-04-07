@@ -3,25 +3,13 @@ namespace Fountain.Models
 	public static class Display
 	{
 		public static ConsoleColor GoodNews = ConsoleColor.Blue;
-		public static ConsoleColor BadNews = ConsoleColor.Red;
-		public static ConsoleColor Enemy = ConsoleColor.DarkGreen;
 
-		public static void LevelOutput(Room r)
+		public static void SenseOutput(ICanBeSensed s)
 		{
-			ConsoleColor startColor = Console.ForegroundColor;
-			
-			if(r is Pit pit)
-			{
-                        	Console.ForegroundColor = BadNews;
-                        	Console.WriteLine(pit.SenseDescription);
-			}
-			else if(r is Fountain fountain)
-			{
-                        	Console.ForegroundColor = GoodNews;
-                        	Console.WriteLine(fountain.SenseDescription);
-			}
-
-                        Console.ForegroundColor = startColor;
+			var startColor = Console.ForegroundColor;
+		    	Console.ForegroundColor = s.SenseColor;
+    			Console.WriteLine(s.SenseDescription);
+    			Console.ForegroundColor = startColor;
 		}
 
 		public static void ColorPrint(string text, ConsoleColor c)
@@ -35,7 +23,7 @@ namespace Fountain.Models
 		public static void GameScreen(Room room, Player player)
 		{
 			Console.WriteLine($"--------------------------------------------------");
-			Console.WriteLine($"You are in the room at (Row: {player.Pos.X}, Col: {player.Pos.Y})");
+			Console.WriteLine($"You are in the room at (Row: {player.Pos.Y+1}, Col: {player.Pos.X+1})");
 			if (room.GetType() != typeof(Room))
 			{ 
 				ColorPrint($"{room.Description}", GoodNews);

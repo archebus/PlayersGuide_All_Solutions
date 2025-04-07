@@ -3,6 +3,7 @@ namespace Fountain.Models
 	public class Dungeon
 	{
 		public Room[,] Rooms { get; set; }
+		public List<Entity> Enemies { get; set; } = new List<Entity>();
 		private static Random rng = new Random();
 
 		// References to common rooms (for ease of access)
@@ -13,6 +14,7 @@ namespace Fountain.Models
 		{
 			Rooms = new Room[diff,diff];
 			InitRooms(diff);
+			InitEnemy(diff);
 		}
 
 		public Room GetRoom(Position pos) => Rooms[pos.X,pos.Y];
@@ -67,6 +69,28 @@ namespace Fountain.Models
 						Rooms[i, j] = new Room();
 					}
 				}
+			}
+		}
+
+		private void InitEnemy(int diff)
+		{
+			int maelCount = 0;
+			
+			switch (diff)
+			{
+				case 4: maelCount = 0; break;
+				case 6: maelCount = 1; break;
+				case 8: maelCount = 2; break;
+				default: maelCount = 0; break;
+			}
+
+			List<Position> occupied = new();
+			Position placePos;
+
+			for(int i = 0; i < maelCount; i++)
+			{
+				placePos = GetUniqueRandomPosition(occupied, diff);
+				Enemies.Add(new Maelstrom(placePos, GetRoom(placePos)));
 			}
 		}
 
