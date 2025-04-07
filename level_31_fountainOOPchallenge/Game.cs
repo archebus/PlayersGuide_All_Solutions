@@ -52,7 +52,9 @@ namespace Fountain.Models
 			{
 				Console.WriteLine("ERROR: Game init failed.");
 				return;
-			}        
+			}
+
+			Display.HelpScreen();
 
 			string input;
 
@@ -72,6 +74,7 @@ namespace Fountain.Models
 			if (P1.Victory)
 			Console.WriteLine("Congratulations! You've won!");
 			else
+			Display.ColorPrint("You have died ...", ConsoleColor.Red);
 			Console.WriteLine("Game Over!");
 		}
 	}

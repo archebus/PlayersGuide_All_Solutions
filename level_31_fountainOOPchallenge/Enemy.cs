@@ -25,7 +25,30 @@ namespace Fountain.Models
 			else
 			{
 				player.Pos = pushPos;
+
+				var destRoom = level.GetRoom(pushPos);
+				destRoom.Enter(player, level);
+
+				this.Move("south", level);
 			}
+		}
+	}
+
+	public class Beast : Entity, ICanBeSensed, ICanAttack
+	{
+		public string SenseDescription => "You smell rotting flesh nearby ...";
+		public ConsoleColor SenseColor => ConsoleColor.DarkGreen;
+
+		public Beast(Position startPos, Room startRoom)
+		{
+			Pos = startPos;
+			CurrentRoom = startRoom;
+		}
+
+		public void Attack(Player player, Dungeon level)
+		{
+			Display.ColorPrint("A beast lashes out from the shadows!", SenseColor);
+			player.Alive = false;
 		}
 	}
 }

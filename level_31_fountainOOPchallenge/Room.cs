@@ -58,7 +58,7 @@ namespace Fountain.Models
 	{
 		public Pit() 
 		{ 
-			Description = "A pit opens up, you fall to your Death!";
+			Description = ""; // This never gets read, player dies before Description is called.
 		}
 
 		public string SenseDescription => "You hear a soft whistling wind ... there is a pit nearby";
@@ -66,8 +66,8 @@ namespace Fountain.Models
 
 		public override void Enter(Player player, Dungeon level)
 		{
+			Display.ColorPrint("A pit opens beneath you and you fall.", ConsoleColor.Red);
 			player.Alive = false;
-			Console.WriteLine("You fell in a pit and died.");
 		}
 	}
 

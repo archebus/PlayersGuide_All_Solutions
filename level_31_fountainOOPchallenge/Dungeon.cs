@@ -75,13 +75,24 @@ namespace Fountain.Models
 		private void InitEnemy(int diff)
 		{
 			int maelCount = 0;
+			int beastCount = 0;
 			
 			switch (diff)
 			{
-				case 4: maelCount = 0; break;
-				case 6: maelCount = 1; break;
-				case 8: maelCount = 2; break;
-				default: maelCount = 0; break;
+				case 4: 
+					maelCount = 0;
+					beastCount = 1;
+					break;
+				case 6: 
+					maelCount = 1;
+					beastCount = 1;
+					break;
+				case 8: 
+					maelCount = 2;
+					beastCount = 2;
+					break;
+				default: 
+					break;
 			}
 
 			List<Position> occupied = new();
@@ -91,6 +102,12 @@ namespace Fountain.Models
 			{
 				placePos = GetUniqueRandomPosition(occupied, diff);
 				Enemies.Add(new Maelstrom(placePos, GetRoom(placePos)));
+			}
+
+			for(int i = 0; i < beastCount; i++)
+			{
+				placePos = GetUniqueRandomPosition(occupied, diff);
+				Enemies.Add(new Beast(placePos, GetRoom(placePos)));
 			}
 		}
 

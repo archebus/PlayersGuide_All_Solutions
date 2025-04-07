@@ -14,7 +14,7 @@ namespace Fountain.Models
         	public Position Pos { get; set; } = default!;
 		public Room CurrentRoom { get; set; } = default!;
 
-        	public virtual Position? Move(string dir, Dungeon level)
+        	public virtual bool Move(string dir, Dungeon level)
 		{
 			Position? desiredPos;
 
@@ -34,10 +34,20 @@ namespace Fountain.Models
 					break;
 				default:
 					Console.WriteLine("Unrecognized direction");
-					return null!;
+					return false;
 			}
 
-            	return desiredPos;
-		}    
+                        if(desiredPos == null)
+                                return false;
+                        
+                        if(level.CheckValidPos(desiredPos))
+                        {                                               
+                                Pos = desiredPos!;
+                                this.CurrentRoom = level.Rooms[Pos.X,Pos.Y];
+                                return true;
+                        }
+
+			return false;
+		}
     	}
 }

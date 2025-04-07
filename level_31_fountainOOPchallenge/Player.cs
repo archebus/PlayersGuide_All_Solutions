@@ -4,11 +4,14 @@ namespace Fountain.Models
 	{
 		public bool Alive { get; set; } = true;
 		public bool Victory { get; set; } = false;
+		public string Weapon { get; set; } = "Bow";
+		public int Arrows { get; set; }
 
 		public Player(Dungeon level)
 		{
 			Pos = level.RefEntrance.Pos;
 			CurrentRoom = level.RefEntrance;
+			Arrows = 5;
 		}
 
 		public void Sense(Dungeon level)
@@ -44,6 +47,62 @@ namespace Fountain.Models
     			}
 		}
 
+		public bool Shoot(string dir, Dungeon level)
+                {
+                        Position? shootPos;
+			Entity? deadEnemy;
+			
+			if(Arrows == 0)
+			{
+				Console.WriteLine("Your quiver is empty ...");
+				return false;
+			}
+			
+			Arrows--;
+                        
+                        switch(dir)
+                        {
+                                case "north":
+                                        shootPos = new Position(Pos.X,Pos.Y-1);
+                                        break; 
+                                case "south":
+                                        shootPos = new Position(Pos.X,Pos.Y+1);
+                                        break;
+                                case "east":
+                                        shootPos = new Position(Pos.X+1,Pos.Y);
+                                        break;
+                                case "west":
+                                        shootPos = new Position(Pos.X-1,Pos.Y);
+                                        break;
+                                default:
+                                        Console.WriteLine("Unrecognized direction");
+                                        return false;
+                        }                                               
+                        
+                        if(shootPos == null)
+                                return false;
+                        
+			if (level.CheckValidPos(shootPos))
+    			{
+        			deadEnemy = level.Enemies.FirstOrDefault(e => shootPos == e.Pos && e is ICanAttack);
+
+        			if (deadEnemy != null)
+        			{
+            				Console.WriteLine("Your arrow strikes a creature.... ");
+            				level.Enemies.Remove(deadEnemy);
+					return true;
+        			}
+    			}                                                    
+			else
+			{
+				Console.WriteLine("Your arrow strikes a wall");
+				return false;
+			}
+                        
+			Console.WriteLine("Your arrow sails into the darkness..");
+                        return false;
+                }
+
 		public string GetInput()
 		{
 			Console.Write("What do you want to do? > ");
@@ -68,7 +127,10 @@ namespace Fountain.Models
 			switch(c.Verb)
 			{
 				case "move":
-					PlayerMove(c.Noun, level);
+					if(Move(c.Noun, level))
+						CurrentRoom.Enter(this, level);
+					else
+						Console.WriteLine("You cannot move that way.");
 					break;
 				case "enable":
 					CurrentRoom.Enable();
@@ -76,28 +138,16 @@ namespace Fountain.Models
 				case "exit":
 					CurrentRoom.Exit(this, level);
 					break;
+				case "shoot":
+					this.Shoot(c.Noun, level);
+					break;
+				case "help":
+					Display.HelpScreen();
+					break;
 				default:
 					Console.WriteLine("Unknown command.");
 					break;	
 			}
 		}
-        
-        	public void PlayerMove(string c, Dungeon level)
-        	{
-            		Position? desiredPos = Move(c, level);
-
-            		if(desiredPos == null)
-                		return;
-            
-            		if(level.CheckValidPos(desiredPos))
-		    	{
-				Pos = desiredPos!;
-			    	CurrentRoom = level.Rooms[Pos.X,Pos.Y];
-			    	CurrentRoom.Enter(this, level);
-			    	return;
-		    	}
-
-			Console.WriteLine("You cannot move that way");
-        	}
 	}
 }
